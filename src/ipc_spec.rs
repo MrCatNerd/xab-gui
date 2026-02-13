@@ -1,10 +1,12 @@
-use anyhow::{Result, ensure};
+use anyhow::Result;
 use bitflags::bitflags;
 use bytes::Bytes;
+use std::io::{Cursor, Read};
 
 pub const IPC_PROTO_VERSION: i32 = 1;
 pub const IPC_PATH: &str = "/tmp/xab/xab_uds";
 
+#[repr(i32)]
 #[derive(Copy, Clone, Default)]
 pub enum IpcCommands {
     // stuff
@@ -29,6 +31,7 @@ pub enum IpcCommands {
 }
 
 // im too lazy to implement monitor names (coming soon TM)
+#[repr(C)]
 #[derive(Default, Debug, Clone, Copy)]
 pub struct Monitor {
     pub index: i32,
@@ -52,14 +55,35 @@ impl Monitor {
         }
     }
     pub fn from_bytes(bytes: &Bytes) -> Result<Self> {
-        ensure!(bytes.len() >= 21, "Not enough bytes to read Monitor");
+        let mut cursor = Cursor::new(&bytes[..]);
+        let mut buf4 = [0u8; 4];
+        let mut buf1 = [0u8; 1];
+
+        cursor.read_exact(&mut buf4)?;
+        let index = i32::from_be_bytes(buf4);
+
+        cursor.read_exact(&mut buf1)?;
+        let primary = buf1[0] != 0;
+
+        cursor.read_exact(&mut buf4)?;
+        let x = u32::from_be_bytes(buf4);
+
+        cursor.read_exact(&mut buf4)?;
+        let y = u32::from_be_bytes(buf4);
+
+        cursor.read_exact(&mut buf4)?;
+        let width = u32::from_be_bytes(buf4);
+
+        cursor.read_exact(&mut buf4)?;
+        let height = u32::from_be_bytes(buf4);
+
         Ok(Self {
-            index: i32::from_be_bytes(bytes[0..4].try_into()?),
-            primary: bytes[4] != 0,
-            x: u32::from_be_bytes(bytes[5..9].try_into()?),
-            y: u32::from_be_bytes(bytes[9..13].try_into()?),
-            width: u32::from_be_bytes(bytes[13..17].try_into()?),
-            height: u32::from_be_bytes(bytes[17..21].try_into()?),
+            index,
+            primary,
+            x,
+            y,
+            width,
+            height,
         })
     }
 }
