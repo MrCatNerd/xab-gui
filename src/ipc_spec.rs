@@ -14,20 +14,20 @@ pub enum IpcCommands {
     NoneInvalid = -1,
     None = 0,
 
-    // ipc stuff
+    // set statte
     Restart = 1,
-    XabShutdown = 2,
+    Shutdown = 2,
     ClientDisconnect = 3,
+    ChangeBackground = 4,
+    DeleteBackground = 5,
+    PauseVideo = 6,
+    UnpauseVideo = 7,
+    TogglePauseVideo = 8,
 
-    // change stuff
-    ChangeBackgrounds = 4,
-    PauseVideos = 6,
-    UnpauseVideos = 7,
-    TogglePauseVideos = 8,
-
-    // get stuff
+    // get state
     GetMonitors = 9,
-    GetCapabilites = 10,
+    GetAllBackgrounds = 10,
+    GetCapabilites = 11,
 }
 
 // im too lazy to implement monitor names (coming soon TM)
@@ -89,10 +89,12 @@ impl Monitor {
 }
 
 bitflags! {
+    #[repr(transparent)]
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct IpcXabCapabilities: u32 {
         const None = 0;
-        const Multimonitor = 1 << 0;
+        const CustomPositioning = 1 << 0;
+        const Monitors = 1 << 1;
     }
 }
 

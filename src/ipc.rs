@@ -116,7 +116,10 @@ impl IpcHandle {
 
     pub async fn get_monitors(&self) -> Vec<Monitor> {
         // if xab isn't capable then return fullscreen
-        if self.capabilities.contains(IpcXabCapabilities::Multimonitor) {
+        if self
+            .capabilities
+            .contains(IpcXabCapabilities::Monitors | IpcXabCapabilities::CustomPositioning)
+        {
             let monitors_bytes = self
                 .send_recv_command(IpcCommands::GetMonitors)
                 .await
