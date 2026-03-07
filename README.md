@@ -22,8 +22,7 @@ meson configure build -Dexperimental=true
 xab --ipc=1
 ```
 
-3.
-run xab-gui and press connect
+3. run xab-gui and press connect
 ```sh
 cargo run
 ```
