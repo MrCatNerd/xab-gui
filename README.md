@@ -5,6 +5,25 @@
 xab gui in rust
 
 > [!WARNING]
-> this is experimental and WIP!
+> this is experimental and WIP! don't expect anything to work
 
-use with the [ipc branch of xab](https://github.com/MrCatNerd/xab/tree/ipc) and with the -Dexperimental=true meson option
+## Instructions
+1. compile xab with the experimental flag set to true:
+```sh
+# or when setting up
+meson setup build -Dexperimental=true
+
+# if already set up
+meson configure build -Dexperimental=true
+```
+
+2. run xab with the --ipc=1 flag:
+```sh
+xab --ipc=1
+```
+
+3.
+run xab-gui and press connect
+```sh
+cargo run
+```
