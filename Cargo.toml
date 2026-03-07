@@ -7,8 +7,8 @@ edition = "2024"
 anyhow = "1.0.100"
 bitflags = "2.9.4"
 bytes = "1.10.1"
-iced = { version = "0.13.1", features = ["image"] }
-iced_aw = { version = "0.12.2", default-features = false, features = ["tab_bar", "card", "badge"] }
-rfd = "0.15.4"
+iced = { version = "0.14.0", features = ["image"] }
+iced_aw = { version = "0.13.1", default-features = false, features = ["tab_bar", "card", "badge"] }
+rfd = "0.17.2"
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
