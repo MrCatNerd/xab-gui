@@ -7,4 +7,4 @@ xab gui in rust
 > [!WARNING]
 > this is experimental and WIP!
 
-use with the [ipc branch of xab](https://github.com/MrCatNerd/xab/tree/ipc)
+use with the [ipc branch of xab](https://github.com/MrCatNerd/xab/tree/ipc) and with the -Dexperimental=true meson option
